@@ -72,49 +72,24 @@ def winner(board):
     Returns the winner of the game, if there is one.
     """
     
-    if board[0][0] == board[0][1] == board[0][2] != None:
-        if board[0][0] == X:
-            return X
-        else:
-            return O
-    elif board[1][0] == board[1][1] == board[1][2] != None: 
-        if board[1][0] == X:
-            return X
-        else:
-            return O
-    elif board[2][0] == board[2][1] == board[2][2] != None:
-        if board[2][0] == X:
-            return X
-        else:
-            return O
-    elif board[0][0] == board[1][0] == board[2][0] != None:
-        if board[0][0] == X:
-            return X
-        else:
-            return O
-    elif board[0][1] == board[1][1] == board[2][1] != None:
-        if board[0][1] == X:
-            return X
-        else:
-            return O
-    elif board[0][2] == board[1][2] == board[2][2] != None:
-        if board[0][2] == X:
-            return X
-        else:
-            return O
-    elif board[0][0] == board[1][1] == board[2][2] != None:
-        if board[0][0] == X:
-            return X
-        else:
-            return O
-    elif board[0][2] == board[1][1] == board[2][0] != None:
-        if board[0][2] == X:
-            return X
-        else:
-            return O
-    else:
-        return None
+    for row in board:
+        if row[0] and all(item == row[0] for item in row):
+            return row[0] if row[0] in (X, O) else None
 
+    
+    for col in range(3):
+        column = [row[col] for row in board]
+        if column[0] and all(item == column[0] for item in column):
+            return column[0] if column[0] in (X, O) else None
+
+    
+    if board[0][0] == board[1][1] == board[2][2] and board[0][0] in (X, O):
+        return board[0][0]
+    if board[0][2] == board[1][1] == board[2][0] and board[0][2] in (X, O):
+        return board[0][2]
+
+    return None
+    
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
